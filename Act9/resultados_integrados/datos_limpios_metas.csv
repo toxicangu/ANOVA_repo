@@ -1,0 +1,755 @@
+estado,mes,anio,nivel_meta
+Baja California,1,2026,Alta
+Baja California Sur,1,2026,Baja
+Sonora,1,2026,Media
+Chihuahua,1,2026,Media
+Sinaloa,1,2026,Baja
+Zacatecas,1,2026,Baja
+Durango,1,2026,Baja
+Coahuila,1,2026,Media
+Tamaulipas,1,2026,Media
+Nuevo León,1,2026,Alta
+San Luis Potosí,1,2026,Media
+Guanajuato,1,2026,Alta
+Querétaro,1,2026,Alta
+Aguascalientes,1,2026,Media
+Hidalgo,1,2026,Baja
+Ciudad De México,1,2026,Alta
+Estado De México,1,2026,Alta
+Morelos,1,2026,Baja
+Puebla,1,2026,Alta
+Tlaxcala,1,2026,Media
+Campeche,1,2026,Baja
+Quintana Roo,1,2026,Media
+Yucatán,1,2026,Alta
+Tabasco,1,2026,Baja
+Veracruz,1,2026,Media
+Chiapas,1,2026,Baja
+Guerrero,1,2026,Baja
+Oaxaca,1,2026,Baja
+Colima,1,2026,Baja
+Jalisco,1,2026,Alta
+Michoacán,1,2026,Media
+Nayarit,1,2026,Media
+Baja California,1,2025,Alta
+Sonora,1,2025,Baja
+Chihuahua,1,2025,Media
+Sinaloa,1,2025,Baja
+Zacatecas,1,2025,Baja
+Durango,1,2025,Baja
+Coahuila,1,2025,Baja
+Tamaulipas,1,2025,Baja
+Nuevo León,1,2025,Alta
+San Luis Potosí,1,2025,Baja
+Guanajuato,1,2025,Media
+Querétaro,1,2025,Alta
+Aguascalientes,1,2025,Baja
+Hidalgo,1,2025,Baja
+Ciudad De México,1,2025,Alta
+Estado De México,1,2025,Alta
+Morelos,1,2025,Baja
+Puebla,1,2025,Alta
+Tlaxcala,1,2025,Baja
+Campeche,1,2025,Baja
+Quintana Roo,1,2025,Media
+Yucatán,1,2025,Alta
+Tabasco,1,2025,Baja
+Veracruz,1,2025,Baja
+Chiapas,1,2025,Baja
+Guerrero,1,2025,Baja
+Oaxaca,1,2025,Baja
+Colima,1,2025,Baja
+Jalisco,1,2025,Alta
+Michoacán,1,2025,Media
+Nayarit,1,2025,Media
+Baja California,2,2026,Alta
+Baja California Sur,2,2026,Baja
+Sonora,2,2026,Media
+Chihuahua,2,2026,Media
+Sinaloa,2,2026,Baja
+Zacatecas,2,2026,Baja
+Durango,2,2026,Baja
+Coahuila,2,2026,Media
+Tamaulipas,2,2026,Media
+Nuevo León,2,2026,Alta
+San Luis Potosí,2,2026,Media
+Guanajuato,2,2026,Alta
+Querétaro,2,2026,Alta
+Aguascalientes,2,2026,Media
+Hidalgo,2,2026,Media
+Ciudad De México,2,2026,Alta
+Estado De México,2,2026,Alta
+Morelos,2,2026,Baja
+Puebla,2,2026,Alta
+Tlaxcala,2,2026,Media
+Campeche,2,2026,Baja
+Quintana Roo,2,2026,Media
+Yucatán,2,2026,Alta
+Tabasco,2,2026,Baja
+Veracruz,2,2026,Media
+Chiapas,2,2026,Baja
+Guerrero,2,2026,Media
+Oaxaca,2,2026,Media
+Colima,2,2026,Baja
+Jalisco,2,2026,Alta
+Michoacán,2,2026,Media
+Nayarit,2,2026,Media
+Baja California,2,2025,Alta
+Sonora,2,2025,Media
+Chihuahua,2,2025,Media
+Sinaloa,2,2025,Baja
+Zacatecas,2,2025,Baja
+Durango,2,2025,Baja
+Coahuila,2,2025,Baja
+Tamaulipas,2,2025,Media
+Nuevo León,2,2025,Alta
+San Luis Potosí,2,2025,Baja
+Guanajuato,2,2025,Media
+Querétaro,2,2025,Alta
+Aguascalientes,2,2025,Baja
+Hidalgo,2,2025,Baja
+Ciudad De México,2,2025,Alta
+Estado De México,2,2025,Alta
+Morelos,2,2025,Baja
+Puebla,2,2025,Alta
+Tlaxcala,2,2025,Baja
+Campeche,2,2025,Baja
+Quintana Roo,2,2025,Media
+Yucatán,2,2025,Alta
+Tabasco,2,2025,Baja
+Veracruz,2,2025,Baja
+Chiapas,2,2025,Baja
+Guerrero,2,2025,Baja
+Oaxaca,2,2025,Baja
+Colima,2,2025,Baja
+Jalisco,2,2025,Alta
+Michoacán,2,2025,Media
+Nayarit,2,2025,Media
+Baja California,3,2026,Alta
+Baja California Sur,3,2026,Baja
+Sonora,3,2026,Media
+Chihuahua,3,2026,Media
+Sinaloa,3,2026,Baja
+Zacatecas,3,2026,Baja
+Durango,3,2026,Baja
+Coahuila,3,2026,Media
+Tamaulipas,3,2026,Media
+Nuevo León,3,2026,Alta
+San Luis Potosí,3,2026,Media
+Guanajuato,3,2026,Alta
+Querétaro,3,2026,Alta
+Aguascalientes,3,2026,Media
+Hidalgo,3,2026,Media
+Ciudad De México,3,2026,Alta
+Estado De México,3,2026,Alta
+Morelos,3,2026,Baja
+Puebla,3,2026,Alta
+Tlaxcala,3,2026,Media
+Campeche,3,2026,Baja
+Quintana Roo,3,2026,Media
+Yucatán,3,2026,Alta
+Tabasco,3,2026,Baja
+Veracruz,3,2026,Media
+Chiapas,3,2026,Baja
+Guerrero,3,2026,Media
+Oaxaca,3,2026,Media
+Colima,3,2026,Baja
+Jalisco,3,2026,Alta
+Michoacán,3,2026,Media
+Nayarit,3,2026,Media
+Baja California,3,2025,Alta
+Sonora,3,2025,Media
+Chihuahua,3,2025,Media
+Sinaloa,3,2025,Baja
+Zacatecas,3,2025,Baja
+Durango,3,2025,Baja
+Coahuila,3,2025,Baja
+Tamaulipas,3,2025,Media
+Nuevo León,3,2025,Alta
+San Luis Potosí,3,2025,Baja
+Guanajuato,3,2025,Alta
+Querétaro,3,2025,Alta
+Aguascalientes,3,2025,Baja
+Hidalgo,3,2025,Baja
+Ciudad De México,3,2025,Alta
+Estado De México,3,2025,Alta
+Morelos,3,2025,Baja
+Puebla,3,2025,Alta
+Tlaxcala,3,2025,Baja
+Campeche,3,2025,Baja
+Quintana Roo,3,2025,Media
+Yucatán,3,2025,Alta
+Tabasco,3,2025,Baja
+Veracruz,3,2025,Baja
+Chiapas,3,2025,Baja
+Guerrero,3,2025,Baja
+Oaxaca,3,2025,Media
+Colima,3,2025,Baja
+Jalisco,3,2025,Alta
+Michoacán,3,2025,Alta
+Nayarit,3,2025,Media
+Baja California,4,2026,Alta
+Baja California Sur,4,2026,Baja
+Sonora,4,2026,Media
+Chihuahua,4,2026,Media
+Sinaloa,4,2026,Baja
+Zacatecas,4,2026,Baja
+Durango,4,2026,Baja
+Coahuila,4,2026,Media
+Tamaulipas,4,2026,Media
+Nuevo León,4,2026,Alta
+San Luis Potosí,4,2026,Media
+Guanajuato,4,2026,Alta
+Querétaro,4,2026,Alta
+Aguascalientes,4,2026,Media
+Hidalgo,4,2026,Media
+Ciudad De México,4,2026,Alta
+Estado De México,4,2026,Alta
+Morelos,4,2026,Baja
+Puebla,4,2026,Alta
+Tlaxcala,4,2026,Media
+Campeche,4,2026,Baja
+Quintana Roo,4,2026,Media
+Yucatán,4,2026,Alta
+Tabasco,4,2026,Baja
+Veracruz,4,2026,Media
+Chiapas,4,2026,Baja
+Guerrero,4,2026,Media
+Oaxaca,4,2026,Media
+Colima,4,2026,Baja
+Jalisco,4,2026,Alta
+Michoacán,4,2026,Media
+Nayarit,4,2026,Media
+Baja California,4,2025,Alta
+Sonora,4,2025,Media
+Chihuahua,4,2025,Media
+Sinaloa,4,2025,Baja
+Zacatecas,4,2025,Baja
+Durango,4,2025,Baja
+Coahuila,4,2025,Baja
+Tamaulipas,4,2025,Media
+Nuevo León,4,2025,Alta
+San Luis Potosí,4,2025,Baja
+Guanajuato,4,2025,Alta
+Querétaro,4,2025,Alta
+Aguascalientes,4,2025,Baja
+Hidalgo,4,2025,Baja
+Ciudad De México,4,2025,Alta
+Estado De México,4,2025,Alta
+Morelos,4,2025,Baja
+Puebla,4,2025,Alta
+Tlaxcala,4,2025,Baja
+Campeche,4,2025,Baja
+Quintana Roo,4,2025,Media
+Yucatán,4,2025,Alta
+Tabasco,4,2025,Media
+Veracruz,4,2025,Baja
+Chiapas,4,2025,Baja
+Guerrero,4,2025,Baja
+Oaxaca,4,2025,Media
+Colima,4,2025,Baja
+Jalisco,4,2025,Alta
+Michoacán,4,2025,Alta
+Nayarit,4,2025,Media
+Baja California,5,2026,Alta
+Baja California Sur,5,2026,Baja
+Sonora,5,2026,Media
+Chihuahua,5,2026,Media
+Sinaloa,5,2026,Baja
+Zacatecas,5,2026,Baja
+Durango,5,2026,Baja
+Coahuila,5,2026,Media
+Tamaulipas,5,2026,Media
+Nuevo León,5,2026,Alta
+San Luis Potosí,5,2026,Media
+Guanajuato,5,2026,Alta
+Querétaro,5,2026,Alta
+Aguascalientes,5,2026,Media
+Hidalgo,5,2026,Media
+Ciudad De México,5,2026,Alta
+Estado De México,5,2026,Alta
+Morelos,5,2026,Baja
+Puebla,5,2026,Alta
+Tlaxcala,5,2026,Media
+Campeche,5,2026,Baja
+Quintana Roo,5,2026,Media
+Yucatán,5,2026,Alta
+Tabasco,5,2026,Baja
+Veracruz,5,2026,Media
+Chiapas,5,2026,Baja
+Guerrero,5,2026,Media
+Oaxaca,5,2026,Media
+Colima,5,2026,Baja
+Jalisco,5,2026,Alta
+Michoacán,5,2026,Alta
+Nayarit,5,2026,Media
+Baja California,5,2025,Alta
+Sonora,5,2025,Media
+Chihuahua,5,2025,Media
+Sinaloa,5,2025,Baja
+Zacatecas,5,2025,Media
+Durango,5,2025,Baja
+Coahuila,5,2025,Baja
+Tamaulipas,5,2025,Media
+Nuevo León,5,2025,Alta
+San Luis Potosí,5,2025,Baja
+Guanajuato,5,2025,Alta
+Querétaro,5,2025,Alta
+Aguascalientes,5,2025,Baja
+Hidalgo,5,2025,Media
+Ciudad De México,5,2025,Alta
+Estado De México,5,2025,Alta
+Morelos,5,2025,Baja
+Puebla,5,2025,Alta
+Tlaxcala,5,2025,Baja
+Campeche,5,2025,Baja
+Quintana Roo,5,2025,Media
+Yucatán,5,2025,Alta
+Tabasco,5,2025,Media
+Veracruz,5,2025,Media
+Chiapas,5,2025,Baja
+Guerrero,5,2025,Baja
+Oaxaca,5,2025,Media
+Colima,5,2025,Baja
+Jalisco,5,2025,Alta
+Michoacán,5,2025,Alta
+Nayarit,5,2025,Media
+Baja California,6,2026,Alta
+Baja California Sur,6,2026,Baja
+Sonora,6,2026,Media
+Chihuahua,6,2026,Media
+Sinaloa,6,2026,Baja
+Zacatecas,6,2026,Baja
+Durango,6,2026,Baja
+Coahuila,6,2026,Media
+Tamaulipas,6,2026,Media
+Nuevo León,6,2026,Alta
+San Luis Potosí,6,2026,Media
+Guanajuato,6,2026,Alta
+Querétaro,6,2026,Alta
+Aguascalientes,6,2026,Media
+Hidalgo,6,2026,Media
+Ciudad De México,6,2026,Alta
+Estado De México,6,2026,Alta
+Morelos,6,2026,Baja
+Puebla,6,2026,Alta
+Tlaxcala,6,2026,Media
+Campeche,6,2026,Baja
+Quintana Roo,6,2026,Media
+Yucatán,6,2026,Alta
+Tabasco,6,2026,Baja
+Veracruz,6,2026,Media
+Chiapas,6,2026,Baja
+Guerrero,6,2026,Media
+Oaxaca,6,2026,Media
+Colima,6,2026,Baja
+Jalisco,6,2026,Alta
+Michoacán,6,2026,Alta
+Nayarit,6,2026,Media
+Baja California,6,2025,Alta
+Sonora,6,2025,Media
+Chihuahua,6,2025,Media
+Sinaloa,6,2025,Media
+Zacatecas,6,2025,Media
+Durango,6,2025,Baja
+Coahuila,6,2025,Baja
+Tamaulipas,6,2025,Media
+Nuevo León,6,2025,Alta
+San Luis Potosí,6,2025,Media
+Guanajuato,6,2025,Alta
+Querétaro,6,2025,Alta
+Aguascalientes,6,2025,Baja
+Hidalgo,6,2025,Media
+Ciudad De México,6,2025,Alta
+Estado De México,6,2025,Alta
+Morelos,6,2025,Media
+Puebla,6,2025,Alta
+Tlaxcala,6,2025,Baja
+Campeche,6,2025,Baja
+Quintana Roo,6,2025,Media
+Yucatán,6,2025,Alta
+Tabasco,6,2025,Media
+Veracruz,6,2025,Media
+Chiapas,6,2025,Baja
+Guerrero,6,2025,Baja
+Oaxaca,6,2025,Media
+Colima,6,2025,Baja
+Jalisco,6,2025,Alta
+Michoacán,6,2025,Alta
+Nayarit,6,2025,Media
+Baja California,7,2026,Alta
+Baja California Sur,7,2026,Baja
+Sonora,7,2026,Media
+Chihuahua,7,2026,Media
+Sinaloa,7,2026,Baja
+Zacatecas,7,2026,Baja
+Durango,7,2026,Baja
+Coahuila,7,2026,Media
+Tamaulipas,7,2026,Media
+Nuevo León,7,2026,Alta
+San Luis Potosí,7,2026,Media
+Guanajuato,7,2026,Alta
+Querétaro,7,2026,Alta
+Aguascalientes,7,2026,Media
+Hidalgo,7,2026,Media
+Ciudad De México,7,2026,Alta
+Estado De México,7,2026,Alta
+Morelos,7,2026,Baja
+Puebla,7,2026,Alta
+Tlaxcala,7,2026,Media
+Campeche,7,2026,Baja
+Quintana Roo,7,2026,Media
+Yucatán,7,2026,Alta
+Tabasco,7,2026,Baja
+Veracruz,7,2026,Media
+Chiapas,7,2026,Baja
+Guerrero,7,2026,Media
+Oaxaca,7,2026,Media
+Colima,7,2026,Baja
+Jalisco,7,2026,Alta
+Michoacán,7,2026,Alta
+Nayarit,7,2026,Media
+Baja California,7,2025,Alta
+Sonora,7,2025,Media
+Chihuahua,7,2025,Media
+Sinaloa,7,2025,Baja
+Zacatecas,7,2025,Baja
+Durango,7,2025,Baja
+Coahuila,7,2025,Baja
+Tamaulipas,7,2025,Media
+Nuevo León,7,2025,Alta
+San Luis Potosí,7,2025,Baja
+Guanajuato,7,2025,Alta
+Querétaro,7,2025,Alta
+Aguascalientes,7,2025,Baja
+Hidalgo,7,2025,Baja
+Ciudad De México,7,2025,Alta
+Estado De México,7,2025,Alta
+Morelos,7,2025,Baja
+Puebla,7,2025,Alta
+Tlaxcala,7,2025,Media
+Campeche,7,2025,Baja
+Quintana Roo,7,2025,Media
+Yucatán,7,2025,Alta
+Tabasco,7,2025,Baja
+Veracruz,7,2025,Media
+Chiapas,7,2025,Baja
+Guerrero,7,2025,Baja
+Oaxaca,7,2025,Baja
+Colima,7,2025,Baja
+Jalisco,7,2025,Alta
+Michoacán,7,2025,Media
+Baja California,8,2026,Alta
+Baja California Sur,8,2026,Baja
+Sonora,8,2026,Media
+Chihuahua,8,2026,Media
+Sinaloa,8,2026,Baja
+Zacatecas,8,2026,Baja
+Durango,8,2026,Baja
+Coahuila,8,2026,Alta
+Tamaulipas,8,2026,Media
+Nuevo León,8,2026,Alta
+San Luis Potosí,8,2026,Media
+Guanajuato,8,2026,Alta
+Querétaro,8,2026,Alta
+Aguascalientes,8,2026,Media
+Hidalgo,8,2026,Alta
+Ciudad De México,8,2026,Alta
+Estado De México,8,2026,Alta
+Morelos,8,2026,Baja
+Puebla,8,2026,Alta
+Tlaxcala,8,2026,Media
+Campeche,8,2026,Baja
+Quintana Roo,8,2026,Media
+Yucatán,8,2026,Alta
+Tabasco,8,2026,Media
+Veracruz,8,2026,Alta
+Chiapas,8,2026,Baja
+Guerrero,8,2026,Media
+Oaxaca,8,2026,Media
+Colima,8,2026,Baja
+Jalisco,8,2026,Alta
+Michoacán,8,2026,Alta
+Nayarit,8,2026,Media
+Baja California,8,2025,Alta
+Sonora,8,2025,Media
+Chihuahua,8,2025,Media
+Sinaloa,8,2025,Baja
+Zacatecas,8,2025,Baja
+Durango,8,2025,Baja
+Coahuila,8,2025,Baja
+Tamaulipas,8,2025,Media
+Nuevo León,8,2025,Alta
+San Luis Potosí,8,2025,Media
+Guanajuato,8,2025,Alta
+Querétaro,8,2025,Alta
+Aguascalientes,8,2025,Baja
+Hidalgo,8,2025,Baja
+Ciudad De México,8,2025,Alta
+Estado De México,8,2025,Alta
+Morelos,8,2025,Baja
+Puebla,8,2025,Alta
+Tlaxcala,8,2025,Media
+Campeche,8,2025,Baja
+Quintana Roo,8,2025,Media
+Yucatán,8,2025,Alta
+Tabasco,8,2025,Baja
+Veracruz,8,2025,Media
+Chiapas,8,2025,Baja
+Guerrero,8,2025,Baja
+Oaxaca,8,2025,Baja
+Colima,8,2025,Baja
+Jalisco,8,2025,Alta
+Michoacán,8,2025,Media
+Baja California,9,2026,Alta
+Baja California Sur,9,2026,Baja
+Sonora,9,2026,Media
+Chihuahua,9,2026,Media
+Sinaloa,9,2026,Baja
+Zacatecas,9,2026,Baja
+Durango,9,2026,Baja
+Coahuila,9,2026,Alta
+Tamaulipas,9,2026,Media
+Nuevo León,9,2026,Alta
+San Luis Potosí,9,2026,Media
+Guanajuato,9,2026,Alta
+Querétaro,9,2026,Alta
+Aguascalientes,9,2026,Media
+Hidalgo,9,2026,Alta
+Ciudad De México,9,2026,Alta
+Estado De México,9,2026,Alta
+Morelos,9,2026,Baja
+Puebla,9,2026,Alta
+Tlaxcala,9,2026,Media
+Campeche,9,2026,Baja
+Quintana Roo,9,2026,Media
+Yucatán,9,2026,Alta
+Tabasco,9,2026,Media
+Veracruz,9,2026,Alta
+Chiapas,9,2026,Baja
+Guerrero,9,2026,Media
+Oaxaca,9,2026,Media
+Colima,9,2026,Baja
+Jalisco,9,2026,Alta
+Michoacán,9,2026,Alta
+Nayarit,9,2026,Media
+Baja California,9,2025,Alta
+Sonora,9,2025,Media
+Chihuahua,9,2025,Media
+Sinaloa,9,2025,Baja
+Zacatecas,9,2025,Baja
+Durango,9,2025,Baja
+Coahuila,9,2025,Baja
+Tamaulipas,9,2025,Media
+Nuevo León,9,2025,Alta
+San Luis Potosí,9,2025,Media
+Guanajuato,9,2025,Alta
+Querétaro,9,2025,Alta
+Aguascalientes,9,2025,Baja
+Hidalgo,9,2025,Baja
+Ciudad De México,9,2025,Alta
+Estado De México,9,2025,Alta
+Morelos,9,2025,Baja
+Puebla,9,2025,Alta
+Tlaxcala,9,2025,Media
+Campeche,9,2025,Baja
+Quintana Roo,9,2025,Media
+Yucatán,9,2025,Alta
+Tabasco,9,2025,Baja
+Veracruz,9,2025,Media
+Chiapas,9,2025,Baja
+Guerrero,9,2025,Baja
+Oaxaca,9,2025,Baja
+Colima,9,2025,Baja
+Jalisco,9,2025,Alta
+Michoacán,9,2025,Alta
+Nayarit,9,2025,Media
+Baja California,10,2026,Alta
+Baja California Sur,10,2026,Baja
+Sonora,10,2026,Media
+Chihuahua,10,2026,Media
+Sinaloa,10,2026,Baja
+Zacatecas,10,2026,Baja
+Durango,10,2026,Media
+Coahuila,10,2026,Alta
+Tamaulipas,10,2026,Alta
+Nuevo León,10,2026,Alta
+San Luis Potosí,10,2026,Media
+Guanajuato,10,2026,Alta
+Querétaro,10,2026,Alta
+Aguascalientes,10,2026,Media
+Hidalgo,10,2026,Alta
+Ciudad De México,10,2026,Alta
+Estado De México,10,2026,Alta
+Morelos,10,2026,Baja
+Puebla,10,2026,Alta
+Tlaxcala,10,2026,Media
+Campeche,10,2026,Baja
+Quintana Roo,10,2026,Media
+Yucatán,10,2026,Alta
+Tabasco,10,2026,Media
+Veracruz,10,2026,Alta
+Chiapas,10,2026,Media
+Guerrero,10,2026,Media
+Oaxaca,10,2026,Media
+Colima,10,2026,Baja
+Jalisco,10,2026,Alta
+Michoacán,10,2026,Alta
+Nayarit,10,2026,Media
+Baja California,10,2025,Alta
+Sonora,10,2025,Media
+Chihuahua,10,2025,Media
+Sinaloa,10,2025,Baja
+Zacatecas,10,2025,Baja
+Durango,10,2025,Baja
+Coahuila,10,2025,Baja
+Tamaulipas,10,2025,Media
+Nuevo León,10,2025,Alta
+San Luis Potosí,10,2025,Media
+Guanajuato,10,2025,Alta
+Querétaro,10,2025,Alta
+Aguascalientes,10,2025,Baja
+Hidalgo,10,2025,Baja
+Ciudad De México,10,2025,Alta
+Estado De México,10,2025,Alta
+Morelos,10,2025,Baja
+Puebla,10,2025,Alta
+Tlaxcala,10,2025,Media
+Campeche,10,2025,Baja
+Quintana Roo,10,2025,Media
+Yucatán,10,2025,Alta
+Tabasco,10,2025,Media
+Veracruz,10,2025,Media
+Chiapas,10,2025,Baja
+Guerrero,10,2025,Baja
+Oaxaca,10,2025,Media
+Colima,10,2025,Baja
+Jalisco,10,2025,Alta
+Michoacán,10,2025,Alta
+Nayarit,10,2025,Media
+Baja California,11,2026,Alta
+Baja California Sur,11,2026,Baja
+Sonora,11,2026,Media
+Chihuahua,11,2026,Media
+Sinaloa,11,2026,Baja
+Zacatecas,11,2026,Baja
+Durango,11,2026,Media
+Coahuila,11,2026,Alta
+Tamaulipas,11,2026,Alta
+Nuevo León,11,2026,Alta
+San Luis Potosí,11,2026,Media
+Guanajuato,11,2026,Alta
+Querétaro,11,2026,Alta
+Aguascalientes,11,2026,Media
+Hidalgo,11,2026,Alta
+Ciudad De México,11,2026,Alta
+Estado De México,11,2026,Alta
+Morelos,11,2026,Baja
+Puebla,11,2026,Alta
+Tlaxcala,11,2026,Media
+Campeche,11,2026,Baja
+Quintana Roo,11,2026,Media
+Yucatán,11,2026,Alta
+Tabasco,11,2026,Media
+Veracruz,11,2026,Alta
+Chiapas,11,2026,Media
+Guerrero,11,2026,Media
+Oaxaca,11,2026,Media
+Colima,11,2026,Baja
+Jalisco,11,2026,Alta
+Michoacán,11,2026,Alta
+Nayarit,11,2026,Media
+Baja California,11,2025,Alta
+Sonora,11,2025,Media
+Chihuahua,11,2025,Media
+Sinaloa,11,2025,Baja
+Zacatecas,11,2025,Media
+Durango,11,2025,Baja
+Coahuila,11,2025,Baja
+Tamaulipas,11,2025,Media
+Nuevo León,11,2025,Alta
+San Luis Potosí,11,2025,Media
+Guanajuato,11,2025,Alta
+Querétaro,11,2025,Alta
+Aguascalientes,11,2025,Baja
+Hidalgo,11,2025,Baja
+Ciudad De México,11,2025,Alta
+Estado De México,11,2025,Alta
+Morelos,11,2025,Baja
+Puebla,11,2025,Alta
+Tlaxcala,11,2025,Media
+Campeche,11,2025,Baja
+Quintana Roo,11,2025,Media
+Yucatán,11,2025,Alta
+Tabasco,11,2025,Media
+Veracruz,11,2025,Media
+Chiapas,11,2025,Baja
+Guerrero,11,2025,Baja
+Oaxaca,11,2025,Media
+Colima,11,2025,Baja
+Jalisco,11,2025,Alta
+Michoacán,11,2025,Alta
+Nayarit,11,2025,Media
+Baja California,12,2026,Alta
+Baja California Sur,12,2026,Baja
+Sonora,12,2026,Alta
+Chihuahua,12,2026,Media
+Sinaloa,12,2026,Baja
+Zacatecas,12,2026,Baja
+Durango,12,2026,Media
+Coahuila,12,2026,Alta
+Tamaulipas,12,2026,Alta
+Nuevo León,12,2026,Alta
+San Luis Potosí,12,2026,Media
+Guanajuato,12,2026,Alta
+Querétaro,12,2026,Alta
+Aguascalientes,12,2026,Alta
+Hidalgo,12,2026,Alta
+Ciudad De México,12,2026,Alta
+Estado De México,12,2026,Alta
+Morelos,12,2026,Baja
+Puebla,12,2026,Alta
+Tlaxcala,12,2026,Media
+Campeche,12,2026,Baja
+Quintana Roo,12,2026,Media
+Yucatán,12,2026,Alta
+Tabasco,12,2026,Media
+Veracruz,12,2026,Alta
+Chiapas,12,2026,Media
+Guerrero,12,2026,Media
+Oaxaca,12,2026,Media
+Colima,12,2026,Baja
+Jalisco,12,2026,Alta
+Michoacán,12,2026,Alta
+Nayarit,12,2026,Alta
+Baja California,12,2025,Alta
+Sonora,12,2025,Media
+Chihuahua,12,2025,Media
+Sinaloa,12,2025,Baja
+Zacatecas,12,2025,Media
+Durango,12,2025,Baja
+Coahuila,12,2025,Baja
+Tamaulipas,12,2025,Media
+Nuevo León,12,2025,Alta
+San Luis Potosí,12,2025,Media
+Guanajuato,12,2025,Alta
+Querétaro,12,2025,Alta
+Aguascalientes,12,2025,Baja
+Hidalgo,12,2025,Media
+Ciudad De México,12,2025,Alta
+Estado De México,12,2025,Alta
+Morelos,12,2025,Baja
+Puebla,12,2025,Alta
+Tlaxcala,12,2025,Media
+Campeche,12,2025,Baja
+Quintana Roo,12,2025,Media
+Yucatán,12,2025,Alta
+Tabasco,12,2025,Media
+Veracruz,12,2025,Media
+Chiapas,12,2025,Baja
+Guerrero,12,2025,Baja
+Oaxaca,12,2025,Media
+Colima,12,2025,Baja
+Jalisco,12,2025,Alta
+Michoacán,12,2025,Alta
+Nayarit,12,2025,Media

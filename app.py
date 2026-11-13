@@ -1,4 +1,7 @@
 from pathlib import Path
+import re
+import unicodedata
+from itertools import combinations
 
 import numpy as np
 import pandas as pd
@@ -15,10 +18,112 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 EXCEL_FILE = Path(__file__).resolve().parent / "Datos_Complementarios_CLV.xlsx"
 
 
+def normalize_name(value):
+    normalized = unicodedata.normalize("NFKD", str(value))
+    normalized = "".join(character for character in normalized if not unicodedata.combining(character))
+    return re.sub(r"[^a-z0-9]", "", normalized.casefold())
+
+
+def build_factorial_anova(data, response, factors):
+    values = data[response].to_numpy(dtype=float)
+    factor_levels = {factor: list(pd.unique(data[factor])) for factor in factors}
+    factor_codes = {
+        factor: pd.Categorical(data[factor], categories=factor_levels[factor]).codes
+        for factor in factors
+    }
+
+    term_matrices = {}
+    for term_size in range(1, len(factors) + 1):
+        for term in combinations(factors, term_size):
+            term_matrix = np.ones((len(data), 1))
+            for factor in term:
+                level_count = len(factor_levels[factor])
+                contrasts = np.zeros((level_count, level_count - 1))
+                contrasts[: level_count - 1] = np.eye(level_count - 1)
+                contrasts[level_count - 1] = -1
+                factor_matrix = contrasts[factor_codes[factor]]
+                term_matrix = (
+                    term_matrix[:, :, np.newaxis] * factor_matrix[:, np.newaxis, :]
+                ).reshape(len(data), -1)
+            term_matrices[term] = term_matrix
+
+    design = np.column_stack([np.ones(len(data))] + list(term_matrices.values()))
+    term_results = []
+
+    def residual_sum_squares(matrix):
+        coefficients, _, rank, _ = np.linalg.lstsq(matrix, values, rcond=None)
+        residuals = values - matrix @ coefficients
+        return float(residuals @ residuals), rank, residuals
+
+    ss_error, model_rank, residuals = residual_sum_squares(design)
+    df_error = len(values) - model_rank
+    if df_error <= 0:
+        return None, None, "No hay grados de libertad residuales; reduce el número de factores o categorías."
+
+    for term, term_matrix in term_matrices.items():
+        reduced_terms = [matrix for current_term, matrix in term_matrices.items() if current_term != term]
+        reduced_design = np.column_stack([np.ones(len(data))] + reduced_terms)
+        reduced_ss, reduced_rank, _ = residual_sum_squares(reduced_design)
+        term_df = model_rank - reduced_rank
+        term_ss = max(0.0, reduced_ss - ss_error)
+        mean_square = term_ss / term_df if term_df else np.nan
+        mean_square_error = ss_error / df_error
+        if term_df == 0:
+            statistic = p_value = np.nan
+        elif mean_square_error == 0:
+            statistic = float("inf") if term_ss > 0 else np.nan
+            p_value = 0.0 if np.isinf(statistic) else np.nan
+        else:
+            statistic = mean_square / mean_square_error
+            p_value = float(stats.f.sf(statistic, term_df, df_error))
+        term_results.append(
+            {
+                "fuente": " × ".join(term),
+                "suma_cuadrados_parcial": term_ss,
+                "gl": term_df,
+                "cuadrado_medio": mean_square,
+                "F": statistic,
+                "p_valor": p_value,
+                "eta_cuadrado_parcial": (
+                    term_ss / (term_ss + ss_error) if term_ss + ss_error > 0 else np.nan
+                ),
+            }
+        )
+
+    grand_mean = float(np.mean(values))
+    ss_total = float(np.sum((values - grand_mean) ** 2))
+    term_results.extend(
+        [
+            {
+                "fuente": "Error",
+                "suma_cuadrados_parcial": ss_error,
+                "gl": df_error,
+                "cuadrado_medio": ss_error / df_error,
+                "F": np.nan,
+                "p_valor": np.nan,
+                "eta_cuadrado_parcial": np.nan,
+            },
+            {
+                "fuente": "Total",
+                "suma_cuadrados_parcial": ss_total,
+                "gl": len(values) - 1,
+                "cuadrado_medio": np.nan,
+                "F": np.nan,
+                "p_valor": np.nan,
+                "eta_cuadrado_parcial": np.nan,
+            },
+        ]
+    )
+    return pd.DataFrame(term_results), residuals, None
+
+
 @st.cache_data
-def load_data(sheet_name):
+def load_data(sheet_name, file_signature):
     """Read a worksheet and normalize its date and inventory-value columns."""
     df = pd.read_excel(EXCEL_FILE, sheet_name=sheet_name)
+    current_stat = EXCEL_FILE.stat()
+    if file_signature != (current_stat.st_mtime_ns, current_stat.st_size):
+        raise RuntimeError("El archivo Excel cambió durante la lectura; vuelve a actualizar los datos.")
     df.columns = df.columns.astype(str).str.strip()
     df = df.dropna(how="all").copy()
 
@@ -38,15 +143,40 @@ if not EXCEL_FILE.exists():
     st.error(f"No se encontró el archivo de datos: {EXCEL_FILE}")
     st.stop()
 
-sheet_names = pd.ExcelFile(EXCEL_FILE).sheet_names
+if st.sidebar.button("Actualizar datos del Excel"):
+    load_data.clear()
+    st.rerun()
+
+try:
+    sheet_names = pd.ExcelFile(EXCEL_FILE).sheet_names
+except PermissionError:
+    st.error(
+        "No se puede leer el archivo Excel porque otro proceso lo mantiene bloqueado. "
+        "Cierra el archivo en Excel (incluida cualquier ventana de vista previa) "
+        "y vuelve a pulsar «Actualizar datos del Excel»."
+    )
+    st.stop()
+
 if not sheet_names:
     st.error("El archivo Excel no contiene hojas para analizar.")
     st.stop()
 
-preferred_sheet = "Histórico_Ventas"
-default_sheet_index = sheet_names.index(preferred_sheet) if preferred_sheet in sheet_names else 0
+preferred_sheet = normalize_name("Historico_Ventas")
+default_sheet_index = next(
+    (index for index, name in enumerate(sheet_names) if normalize_name(name) == preferred_sheet),
+    0,
+)
 selected_sheet = st.sidebar.selectbox("Hoja del archivo Excel", sheet_names, index=default_sheet_index)
-df = load_data(selected_sheet)
+workbook_stat = EXCEL_FILE.stat()
+try:
+    df = load_data(selected_sheet, (workbook_stat.st_mtime_ns, workbook_stat.st_size))
+except PermissionError:
+    st.error(
+        "No se puede cargar la hoja porque otro proceso mantiene bloqueado el archivo Excel. "
+        "Cierra el archivo en Excel (incluida cualquier ventana de vista previa) "
+        "y vuelve a pulsar «Actualizar datos del Excel»."
+    )
+    st.stop()
 
 if df.empty:
     st.error(f"La hoja '{selected_sheet}' no contiene registros.")
@@ -73,7 +203,8 @@ views = [
     "Regresión Lineal",
     "Regresión No Lineal",
     "Regresión Logística",
-    "ANOVA",
+    "ANOVA de un factor",
+    "ANOVA factorial",
 ]
 has_clv_data = {"nombre_cliente", "total_neto"}.issubset(df.columns)
 if has_clv_data:
@@ -313,7 +444,377 @@ elif View == "Regresión Logística":
                         )
                         st.write(f"Precisión para {label}: {precision:.4f}")
 
-elif View == "ANOVA":
+elif View == "ANOVA factorial":
+    group_columns = [
+        column for column in categorical_columns if 2 <= df[column].nunique(dropna=True) <= 30
+    ]
+    if not numeric_columns:
+        st.info("Se necesita al menos una variable numérica para ANOVA.")
+    elif len(group_columns) < 2:
+        st.info("Se necesitan al menos dos variables categóricas con entre 2 y 30 niveles.")
+    else:
+        target_columns = [
+            column
+            for column in numeric_columns
+            if sum(group_column != column for group_column in group_columns) >= 2
+        ]
+        if not target_columns:
+            st.info("No hay una variable numérica separada de al menos dos factores.")
+        else:
+            default_y = "total_neto" if "total_neto" in target_columns else target_columns[0]
+            Variable_y = st.sidebar.selectbox(
+                "Variable numérica (Y)", target_columns, index=target_columns.index(default_y)
+            )
+            factor_options = [column for column in group_columns if column != Variable_y]
+            preferred_groups = ["ano", "mes", "estado", "marca", "almacen", "vendedor", "ciudad"]
+            defaults = []
+            for preferred in preferred_groups:
+                match = next(
+                    (column for column in factor_options if normalize_name(column) == preferred),
+                    None,
+                )
+                if match and match not in defaults:
+                    defaults.append(match)
+                if len(defaults) == 2:
+                    break
+            if len(defaults) < 2:
+                defaults.extend(column for column in factor_options if column not in defaults)
+            Variables_factor = st.sidebar.multiselect(
+                "Factores (2 o 3; se incluyen todas sus interacciones)",
+                options=factor_options,
+                default=defaults[:2],
+            )
+            alpha = st.sidebar.selectbox("Nivel de significancia (α)", [0.01, 0.05, 0.10], index=1)
+
+            if len(Variables_factor) < 2:
+                st.info("Selecciona al menos dos factores para el ANOVA factorial.")
+            elif len(Variables_factor) > 3:
+                st.info("Selecciona como máximo tres factores para mantener interpretable el modelo factorial.")
+            else:
+                data = (
+                    df[Variables_factor + [Variable_y]]
+                    .replace([np.inf, -np.inf], np.nan)
+                    .dropna()
+                )
+                level_counts = [data[factor].nunique(dropna=True) for factor in Variables_factor]
+                if data.empty or any(level_count < 2 for level_count in level_counts):
+                    st.info("Los factores seleccionados necesitan al menos dos niveles con datos válidos.")
+                else:
+                    model_columns = int(np.prod(level_counts))
+                    if model_columns > 500:
+                        st.info(
+                            "El diseño genera más de 500 parámetros potenciales. "
+                            "Reduce los niveles o el número de factores."
+                        )
+                    elif len(data) <= model_columns:
+                        st.info(
+                            "No hay suficientes observaciones para estimar el modelo completo. "
+                            "Se requiere más observaciones que parámetros potenciales."
+                        )
+                    else:
+                        grouped = list(data.groupby(Variables_factor, observed=True)[Variable_y])
+                        valid_groups = [
+                            (labels, values.to_numpy(dtype=float))
+                            for labels, values in grouped
+                            if len(values) >= 2
+                        ]
+                        if len(valid_groups) < 2:
+                            st.info("Se necesitan al menos dos combinaciones de factores con dos observaciones.")
+                        else:
+                            anova_table, residuals, error = build_factorial_anova(
+                                data, Variable_y, Variables_factor
+                            )
+                            if error:
+                                st.info(error)
+                            else:
+                                group_labels = [
+                                    ", ".join(
+                                        f"{factor}={label}"
+                                        for factor, label in zip(Variables_factor, labels)
+                                    )
+                                    for labels, _ in valid_groups
+                                ]
+                                group_values = [values for _, values in valid_groups]
+                                summary = pd.DataFrame(
+                                    [
+                                        {
+                                            "combinacion": label,
+                                            "n": len(values),
+                                            "media": float(np.mean(values)),
+                                            "desviacion_estandar": float(np.std(values, ddof=1)),
+                                            "mediana": float(np.median(values)),
+                                            "minimo": float(np.min(values)),
+                                            "Q1": float(np.percentile(values, 25)),
+                                            "Q3": float(np.percentile(values, 75)),
+                                            "maximo": float(np.max(values)),
+                                        }
+                                        for label, values in zip(group_labels, group_values)
+                                    ]
+                                )
+
+                                st.subheader("Estadística descriptiva por combinación de factores")
+                                st.dataframe(summary, use_container_width=True)
+                                st.caption(
+                                    f"Observaciones analizadas: {len(data):,}. "
+                                    f"Filas excluidas por valores ausentes o infinitos: {len(df) - len(data):,}."
+                                )
+                                singleton_cells = len(grouped) - len(valid_groups)
+                                if singleton_cells:
+                                    st.caption(
+                                        f"{singleton_cells} combinación(es) con una sola observación "
+                                        "se conservaron en el modelo, pero se excluyeron de Levene y del post hoc."
+                                    )
+
+                                st.subheader("Gráficas de interacción")
+                                interaction_columns = st.columns(2)
+                                interaction_x = interaction_columns[0].selectbox(
+                                    "Factor del eje X",
+                                    Variables_factor,
+                                    index=0,
+                                    key="anova_interaction_x",
+                                )
+                                interaction_color_options = [
+                                    factor for factor in Variables_factor if factor != interaction_x
+                                ]
+                                interaction_color = interaction_columns[1].selectbox(
+                                    "Factor de interacción (líneas)",
+                                    interaction_color_options,
+                                    index=0,
+                                    key="anova_interaction_color",
+                                )
+                                remaining_factors = [
+                                    factor
+                                    for factor in Variables_factor
+                                    if factor not in {interaction_x, interaction_color}
+                                ]
+                                interaction_data = data
+                                if remaining_factors:
+                                    filter_factor = remaining_factors[0]
+                                    filter_levels = list(pd.unique(data[filter_factor]))
+                                    selected_level = st.selectbox(
+                                        f"Nivel de {filter_factor} para la interacción",
+                                        filter_levels,
+                                        key="anova_interaction_filter",
+                                    )
+                                    interaction_data = data.loc[
+                                        data[filter_factor] == selected_level
+                                    ]
+
+                                interaction_summary = (
+                                    interaction_data.groupby(
+                                        [interaction_x, interaction_color], observed=True
+                                    )[Variable_y]
+                                    .agg(media="mean", n="count", desviacion="std")
+                                    .reset_index()
+                                )
+                                interaction_summary["error_estandar"] = (
+                                    interaction_summary["desviacion"]
+                                    / np.sqrt(interaction_summary["n"])
+                                )
+                                heatmap_data = interaction_summary.pivot(
+                                    index=interaction_color,
+                                    columns=interaction_x,
+                                    values="media",
+                                )
+                                interaction_charts = st.columns(2)
+                                interaction_figure = px.line(
+                                    interaction_summary,
+                                    x=interaction_x,
+                                    y="media",
+                                    color=interaction_color,
+                                    markers=True,
+                                    error_y="error_estandar",
+                                    title=f"Interacción: {interaction_x} × {interaction_color}",
+                                    labels={
+                                        interaction_x: interaction_x,
+                                        "media": f"Media de {Variable_y}",
+                                        interaction_color: interaction_color,
+                                        "error_estandar": "Error estándar",
+                                    },
+                                )
+                                interaction_figure.update_layout(
+                                    legend_title_text=interaction_color,
+                                    template="plotly_white",
+                                )
+                                interaction_charts[0].plotly_chart(
+                                    interaction_figure, use_container_width=True
+                                )
+                                heatmap_figure = go.Figure(
+                                    data=go.Heatmap(
+                                        z=heatmap_data.to_numpy(dtype=float),
+                                        x=heatmap_data.columns.astype(str).tolist(),
+                                        y=heatmap_data.index.astype(str).tolist(),
+                                        text=np.round(heatmap_data.to_numpy(dtype=float), 2),
+                                        texttemplate="%{text}",
+                                        colorscale="RdBu",
+                                        reversescale=True,
+                                        colorbar={"title": f"Media de {Variable_y}"},
+                                        hovertemplate=(
+                                            f"{interaction_color}: %{{y}}<br>"
+                                            f"{interaction_x}: %{{x}}<br>"
+                                            "Media: %{z:.3f}<extra></extra>"
+                                        ),
+                                    )
+                                )
+                                heatmap_figure.update_layout(
+                                    title=f"Heatmap de medias: {interaction_color} × {interaction_x}",
+                                    xaxis_title=interaction_x,
+                                    yaxis_title=interaction_color,
+                                    template="plotly_white",
+                                )
+                                interaction_charts[1].plotly_chart(
+                                    heatmap_figure, use_container_width=True
+                                )
+                                st.caption(
+                                    "Líneas no paralelas sugieren una interacción; confirma su evidencia "
+                                    "en el término de interacción de la tabla ANOVA. "
+                                    "El heatmap muestra las medias observadas por combinación."
+                                )
+
+                                error_row = anova_table.loc[anova_table["fuente"] == "Error"].iloc[0]
+                                error_mean_square = float(error_row["cuadrado_medio"])
+                                error_df = int(error_row["gl"])
+                                anova_table["significativo"] = anova_table["p_valor"].apply(
+                                    lambda value: bool(np.isfinite(value) and value < alpha)
+                                )
+                                st.subheader("ANOVA factorial (pruebas parciales tipo III)")
+                                st.dataframe(anova_table, use_container_width=True)
+                                st.caption(
+                                    "Se usa codificación de contrastes suma-cero y se prueban los efectos "
+                                    "principales e interacciones ajustados por los demás términos. "
+                                    "Las sumas de cuadrados parciales no tienen por qué sumar el total."
+                                )
+
+                                if len(residuals) >= 3 and len(residuals) <= 5000 and np.unique(residuals).size > 1:
+                                    shapiro_stat, shapiro_p = stats.shapiro(residuals)
+                                    normality_result = (
+                                        "Compatible con normalidad"
+                                        if shapiro_p >= alpha
+                                        else "Posible desviación de normalidad"
+                                    )
+                                else:
+                                    shapiro_stat, shapiro_p = np.nan, np.nan
+                                    normality_result = "No calculada (requiere 3–5000 residuos no constantes)"
+                                if len(group_values) >= 2:
+                                    levene_stat, levene_p = stats.levene(*group_values, center="median")
+                                else:
+                                    levene_stat, levene_p = np.nan, np.nan
+                                equal_variances = np.isfinite(levene_p) and levene_p >= alpha
+                                diagnostics = pd.DataFrame(
+                                    [
+                                        {
+                                            "supuesto": "Normalidad de residuos (Shapiro-Wilk)",
+                                            "estadistico": shapiro_stat,
+                                            "p_valor": shapiro_p,
+                                            "resultado": normality_result,
+                                        },
+                                        {
+                                            "supuesto": "Homogeneidad entre combinaciones (Levene)",
+                                            "estadistico": float(levene_stat),
+                                            "p_valor": float(levene_p),
+                                            "resultado": (
+                                                "Compatible con varianzas iguales"
+                                                if equal_variances
+                                                else "Posible heterogeneidad de varianzas"
+                                                if np.isfinite(levene_p)
+                                                else "No calculada"
+                                            ),
+                                        },
+                                        {
+                                            "supuesto": "Independencia de observaciones",
+                                            "estadistico": np.nan,
+                                            "p_valor": np.nan,
+                                            "resultado": "No verificable estadísticamente; confirmar según el diseño de muestreo.",
+                                        },
+                                    ]
+                                )
+                                st.subheader("Diagnóstico de supuestos")
+                                st.dataframe(diagnostics, use_container_width=True)
+                                if not equal_variances:
+                                    st.warning(
+                                        "La prueba clásica F puede ser sensible a la heterogeneidad de varianzas. "
+                                        "Interpreta los efectos factoriales con cautela."
+                                    )
+                                if not np.isfinite(shapiro_p):
+                                    st.caption(
+                                        "Shapiro-Wilk no se calculó porque los residuos no cumplen "
+                                        "el rango de tamaño o variación requerido."
+                                    )
+                                elif shapiro_p < alpha:
+                                    st.warning(
+                                        "Shapiro-Wilk detecta una posible desviación de normalidad en los residuos."
+                                    )
+
+                                st.subheader("Comparaciones post hoc entre combinaciones")
+                                if len(valid_groups) > 100:
+                                    st.info(
+                                        "Se omitieron las comparaciones: hay más de 100 combinaciones de factores."
+                                    )
+                                else:
+                                    method = "Tukey HSD" if equal_variances else "Games-Howell"
+                                    st.caption(
+                                        f"Método: {method}, con ajuste por comparaciones múltiples "
+                                        f"(α = {alpha:g})."
+                                    )
+                                    pairwise_rows = []
+                                    group_count = len(valid_groups)
+                                    for first, second in combinations(range(group_count), 2):
+                                        values_a = group_values[first]
+                                        values_b = group_values[second]
+                                        difference = float(np.mean(values_a) - np.mean(values_b))
+                                        if equal_variances:
+                                            variance_term = error_mean_square * (
+                                                1 / len(values_a) + 1 / len(values_b)
+                                            )
+                                            degrees_freedom = error_df
+                                        else:
+                                            variance_a = float(np.var(values_a, ddof=1) / len(values_a))
+                                            variance_b = float(np.var(values_b, ddof=1) / len(values_b))
+                                            variance_term = variance_a + variance_b
+                                            degrees_freedom = (
+                                                variance_term**2
+                                                / (
+                                                    variance_a**2 / (len(values_a) - 1)
+                                                    + variance_b**2 / (len(values_b) - 1)
+                                                )
+                                                if variance_term > 0
+                                                else np.nan
+                                            )
+                                        if variance_term <= 0 or not np.isfinite(degrees_freedom):
+                                            adjusted_p = margin = np.nan
+                                        else:
+                                            standard_error = np.sqrt(variance_term / 2)
+                                            q_statistic = abs(difference) / standard_error
+                                            adjusted_p = float(
+                                                stats.studentized_range.sf(
+                                                    q_statistic, group_count, degrees_freedom
+                                                )
+                                            )
+                                            critical_q = float(
+                                                stats.studentized_range.ppf(
+                                                    1 - alpha, group_count, degrees_freedom
+                                                )
+                                            )
+                                            margin = critical_q * standard_error
+                                        pairwise_rows.append(
+                                            {
+                                                "combinacion_1": group_labels[first],
+                                                "combinacion_2": group_labels[second],
+                                                "diferencia_medias": difference,
+                                                "IC_inferior": difference - margin,
+                                                "IC_superior": difference + margin,
+                                                "p_valor_ajustado": adjusted_p,
+                                                "significativo": bool(
+                                                    np.isfinite(adjusted_p) and adjusted_p < alpha
+                                                ),
+                                            }
+                                        )
+                                    pairwise = pd.DataFrame(pairwise_rows).sort_values(
+                                        "p_valor_ajustado", na_position="last"
+                                    )
+                                    st.dataframe(pairwise, use_container_width=True)
+
+elif View == "ANOVA de un factor":
     group_columns = [
         column for column in categorical_columns if 2 <= df[column].nunique(dropna=True) <= 30
     ]

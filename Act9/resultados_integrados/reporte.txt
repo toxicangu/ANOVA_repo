@@ -1,0 +1,424 @@
+ACTIVIDAD 9 - REGRESIÓN LOGÍSTICA MULTINOMIAL (CLV)
+Leyendo Excel (puede tardar unos segundos)...
+  Negocios_CRM: 5268 filas x 19 columnas
+  Histórico_Compras: 9186 filas x 8 columnas
+  Clasificación_Articulos: 18462 filas x 3 columnas
+  Salidas_Almacen: 27474 filas x 9 columnas
+  Metas: 756 filas x 8 columnas
+
+======================================================================
+PREPROCESAMIENTO: Negocios_CRM
+======================================================================
+  Nulos (%):
+estado                  2.83
+tipo_negocio           10.69
+nombre_zona            21.70
+vendedor                7.71
+numero_actividades      0.44
+valor_negocio           0.44
+mes_creacion            0.57
+dia_semana_creacion     0.57
+anio_creacion           0.57
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Outliers recortados (IQR): {'numero_actividades': 432}
+  resultado_negocio: {'Ganado': 4099, 'Perdido': 934, 'En Proceso': 235}
+  nivel_valor_negocio: {'Alto': 1756, 'Bajo': 1756, 'Medio': 1756}
+
+======================================================================
+PREPROCESAMIENTO: Histórico_Compras + Clasificación_Articulos
+======================================================================
+  Duplicados eliminados: 149
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Outliers recortados (IQR): {'unidades': 1204}
+  rango_precio_compra: {'Bajo': 3039, 'Alto': 3001, 'Medio': 2997}
+
+======================================================================
+PREPROCESAMIENTO: Salidas_Almacen + Clasificación_Articulos
+======================================================================
+  Duplicados eliminados: 0
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Rotación: Baja (1-2 uds), Media (3-10 uds), Alta (>10 uds)
+  rotacion: {'Baja': 13007, 'Media': 8165, 'Alta': 6302}
+
+======================================================================
+PREPROCESAMIENTO: Metas
+======================================================================
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Registros con meta = 0 eliminados: 2
+  Outliers recortados (IQR): {'meta': 59}
+  nivel_meta: {'Baja': 252, 'Alta': 251, 'Media': 251}
+
+======================================================================
+MODELO 1: Resultado del negocio CRM
+======================================================================
+  Transformación log1p: ['valor_negocio']
+  Clases: {'Ganado': 4099, 'Perdido': 934, 'En Proceso': 235}
+  Predictores numéricos: ['numero_actividades', 'valor_negocio', 'mes_creacion', 'dia_semana_creacion', 'anio_creacion']
+  Predictores categóricos: ['estado', 'tipo_negocio', 'nombre_zona', 'nombre_pipeline', 'vendedor']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+            Ganado  Perdido  En Proceso
+Ganado        1007      170          53
+Perdido         76      161          43
+En Proceso       1        4          66
+
+  Exactitud (accuracy):    0.7805
+  Precisión (macro):       0.6057
+  Sensibilidad (macro):    0.7744
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+      Ganado       0.93      0.82      0.87      1230
+     Perdido       0.48      0.57      0.52       280
+  En Proceso       0.41      0.93      0.57        71
+
+    accuracy                           0.78      1581
+   macro avg       0.61      0.77      0.65      1581
+weighted avg       0.83      0.78      0.80      1581
+
+
+======================================================================
+MODELO 2: Nivel de valor del negocio CRM
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Alto': 1756, 'Bajo': 1756, 'Medio': 1756}
+  Predictores numéricos: ['numero_actividades', 'mes_creacion', 'dia_semana_creacion', 'anio_creacion']
+  Predictores categóricos: ['estado', 'tipo_negocio', 'nombre_zona', 'nombre_pipeline', 'vendedor', 'resultado_negocio']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Bajo  Medio  Alto
+Bajo    452     57    18
+Medio    13    453    61
+Alto     44     66   417
+
+  Exactitud (accuracy):    0.8362
+  Precisión (macro):       0.8384
+  Sensibilidad (macro):    0.8362
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Bajo       0.89      0.86      0.87       527
+       Medio       0.79      0.86      0.82       527
+        Alto       0.84      0.79      0.82       527
+
+    accuracy                           0.84      1581
+   macro avg       0.84      0.84      0.84      1581
+weighted avg       0.84      0.84      0.84      1581
+
+
+======================================================================
+MODELO 3: Rango de precio unitario de compra
+======================================================================
+  Transformación log1p: ['unidades']
+  Clases: {'Bajo': 3039, 'Alto': 3001, 'Medio': 2997}
+  Predictores numéricos: ['unidades', 'anio', 'mes']
+  Predictores categóricos: ['categoria']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Bajo  Medio  Alto
+Bajo    699    166    47
+Medio   191    490   218
+Alto     54    218   629
+
+  Exactitud (accuracy):    0.6704
+  Precisión (macro):       0.6682
+  Sensibilidad (macro):    0.6699
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Bajo       0.74      0.77      0.75       912
+       Medio       0.56      0.55      0.55       899
+        Alto       0.70      0.70      0.70       901
+
+    accuracy                           0.67      2712
+   macro avg       0.67      0.67      0.67      2712
+weighted avg       0.67      0.67      0.67      2712
+
+
+======================================================================
+MODELO 4: Rotación de salidas de almacén
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Baja': 13007, 'Media': 8165, 'Alta': 6302}
+  Predictores numéricos: ['anio', 'mes']
+  Predictores categóricos: ['marca', 'categoria']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Baja  Media  Alta
+Baja   2319    753   830
+Media   751    674  1025
+Alta    163    291  1437
+
+  Exactitud (accuracy):    0.5374
+  Precisión (macro):       0.5154
+  Sensibilidad (macro):    0.5431
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Baja       0.72      0.59      0.65      3902
+       Media       0.39      0.28      0.32      2450
+        Alta       0.44      0.76      0.55      1891
+
+    accuracy                           0.54      8243
+   macro avg       0.52      0.54      0.51      8243
+weighted avg       0.56      0.54      0.53      8243
+
+
+======================================================================
+MODELO 5: Nivel de meta mensual por estado
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Baja': 252, 'Alta': 251, 'Media': 251}
+  Predictores numéricos: ['mes', 'anio']
+  Predictores categóricos: ['estado']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Baja  Media  Alta
+Baja     61     14     1
+Media     3     68     4
+Alta      0      7    69
+
+  Exactitud (accuracy):    0.8722
+  Precisión (macro):       0.8832
+  Sensibilidad (macro):    0.8724
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Baja       0.95      0.80      0.87        76
+       Media       0.76      0.91      0.83        75
+        Alta       0.93      0.91      0.92        76
+
+    accuracy                           0.87       227
+   macro avg       0.88      0.87      0.87       227
+weighted avg       0.88      0.87      0.87       227
+
+
+======================================================================
+RESUMEN DE MÉTRICAS
+======================================================================
+ modelo   variable_objetivo  exactitud  precision_macro  sensibilidad_macro
+      1   resultado_negocio     0.7805           0.6057              0.7744
+      2 nivel_valor_negocio     0.8362           0.8384              0.8362
+      3 rango_precio_compra     0.6704           0.6682              0.6699
+      4            rotacion     0.5374           0.5154              0.5431
+      5          nivel_meta     0.8722           0.8832              0.8724
+ACTIVIDAD 9 - REGRESIÓN LOGÍSTICA MULTINOMIAL (CLV)
+Leyendo Excel (puede tardar unos segundos)...
+  Negocios_CRM: 5268 filas x 19 columnas
+  Histórico_Compras: 9186 filas x 8 columnas
+  Clasificación_Articulos: 18462 filas x 3 columnas
+  Salidas_Almacen: 27474 filas x 9 columnas
+  Metas: 756 filas x 8 columnas
+
+======================================================================
+PREPROCESAMIENTO: Negocios_CRM
+======================================================================
+  Nulos (%):
+estado                  2.83
+tipo_negocio           10.69
+nombre_zona            21.70
+vendedor                7.71
+numero_actividades      0.44
+valor_negocio           0.44
+mes_creacion            0.57
+dia_semana_creacion     0.57
+anio_creacion           0.57
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Outliers recortados (IQR): {'numero_actividades': 432}
+  resultado_negocio: {'Ganado': 4099, 'Perdido': 934, 'En Proceso': 235}
+  nivel_valor_negocio: {'Alto': 1756, 'Bajo': 1756, 'Medio': 1756}
+
+======================================================================
+PREPROCESAMIENTO: Histórico_Compras + Clasificación_Articulos
+======================================================================
+  Duplicados eliminados: 149
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Outliers recortados (IQR): {'unidades': 1204}
+  rango_precio_compra: {'Bajo': 3039, 'Alto': 3001, 'Medio': 2997}
+
+======================================================================
+PREPROCESAMIENTO: Salidas_Almacen + Clasificación_Articulos
+======================================================================
+  Duplicados eliminados: 0
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Rotación: Baja (1-2 uds), Media (3-10 uds), Alta (>10 uds)
+  rotacion: {'Baja': 13007, 'Media': 8165, 'Alta': 6302}
+
+======================================================================
+PREPROCESAMIENTO: Metas
+======================================================================
+  Sin valores nulos
+  Imputación: mediana (numéricas) y moda (categóricas)
+  Registros con meta = 0 eliminados: 2
+  Outliers recortados (IQR): {'meta': 59}
+  nivel_meta: {'Baja': 252, 'Alta': 251, 'Media': 251}
+
+======================================================================
+MODELO 1: Resultado del negocio CRM
+======================================================================
+  Transformación log1p: ['valor_negocio']
+  Clases: {'Ganado': 4099, 'Perdido': 934, 'En Proceso': 235}
+  Predictores numéricos: ['numero_actividades', 'valor_negocio', 'mes_creacion', 'dia_semana_creacion', 'anio_creacion']
+  Predictores categóricos: ['estado', 'tipo_negocio', 'nombre_zona', 'nombre_pipeline', 'vendedor']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+            Ganado  Perdido  En Proceso
+Ganado        1007      170          53
+Perdido         76      161          43
+En Proceso       1        4          66
+
+  Exactitud (accuracy):    0.7805
+  Precisión (macro):       0.6057
+  Sensibilidad (macro):    0.7744
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+      Ganado       0.93      0.82      0.87      1230
+     Perdido       0.48      0.57      0.52       280
+  En Proceso       0.41      0.93      0.57        71
+
+    accuracy                           0.78      1581
+   macro avg       0.61      0.77      0.65      1581
+weighted avg       0.83      0.78      0.80      1581
+
+
+======================================================================
+MODELO 2: Nivel de valor del negocio CRM
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Alto': 1756, 'Bajo': 1756, 'Medio': 1756}
+  Predictores numéricos: ['numero_actividades', 'mes_creacion', 'dia_semana_creacion', 'anio_creacion']
+  Predictores categóricos: ['estado', 'tipo_negocio', 'nombre_zona', 'nombre_pipeline', 'vendedor', 'resultado_negocio']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Bajo  Medio  Alto
+Bajo    452     57    18
+Medio    13    453    61
+Alto     44     66   417
+
+  Exactitud (accuracy):    0.8362
+  Precisión (macro):       0.8384
+  Sensibilidad (macro):    0.8362
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Bajo       0.89      0.86      0.87       527
+       Medio       0.79      0.86      0.82       527
+        Alto       0.84      0.79      0.82       527
+
+    accuracy                           0.84      1581
+   macro avg       0.84      0.84      0.84      1581
+weighted avg       0.84      0.84      0.84      1581
+
+
+======================================================================
+MODELO 3: Rango de precio unitario de compra
+======================================================================
+  Transformación log1p: ['unidades']
+  Clases: {'Bajo': 3039, 'Alto': 3001, 'Medio': 2997}
+  Predictores numéricos: ['unidades', 'anio', 'mes']
+  Predictores categóricos: ['categoria']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Bajo  Medio  Alto
+Bajo    699    166    47
+Medio   191    490   218
+Alto     54    218   629
+
+  Exactitud (accuracy):    0.6704
+  Precisión (macro):       0.6682
+  Sensibilidad (macro):    0.6699
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Bajo       0.74      0.77      0.75       912
+       Medio       0.56      0.55      0.55       899
+        Alto       0.70      0.70      0.70       901
+
+    accuracy                           0.67      2712
+   macro avg       0.67      0.67      0.67      2712
+weighted avg       0.67      0.67      0.67      2712
+
+
+======================================================================
+MODELO 4: Rotación de salidas de almacén
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Baja': 13007, 'Media': 8165, 'Alta': 6302}
+  Predictores numéricos: ['anio', 'mes']
+  Predictores categóricos: ['marca', 'categoria']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Baja  Media  Alta
+Baja   2319    753   830
+Media   751    674  1025
+Alta    163    291  1437
+
+  Exactitud (accuracy):    0.5374
+  Precisión (macro):       0.5154
+  Sensibilidad (macro):    0.5431
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Baja       0.72      0.59      0.65      3902
+       Media       0.39      0.28      0.32      2450
+        Alta       0.44      0.76      0.55      1891
+
+    accuracy                           0.54      8243
+   macro avg       0.52      0.54      0.51      8243
+weighted avg       0.56      0.54      0.53      8243
+
+
+======================================================================
+MODELO 5: Nivel de meta mensual por estado
+======================================================================
+  Transformación log1p: ninguna
+  Clases: {'Baja': 252, 'Alta': 251, 'Media': 251}
+  Predictores numéricos: ['mes', 'anio']
+  Predictores categóricos: ['estado']
+
+  Matriz de confusión (filas = real, columnas = predicción):
+       Baja  Media  Alta
+Baja     61     14     1
+Media     3     68     4
+Alta      0      7    69
+
+  Exactitud (accuracy):    0.8722
+  Precisión (macro):       0.8832
+  Sensibilidad (macro):    0.8724
+
+  Reporte por clase:
+              precision    recall  f1-score   support
+
+        Baja       0.95      0.80      0.87        76
+       Media       0.76      0.91      0.83        75
+        Alta       0.93      0.91      0.92        76
+
+    accuracy                           0.87       227
+   macro avg       0.88      0.87      0.87       227
+weighted avg       0.88      0.87      0.87       227
+
+
+======================================================================
+RESUMEN DE MÉTRICAS
+======================================================================
+ modelo   variable_objetivo  exactitud  precision_macro  sensibilidad_macro
+      1   resultado_negocio     0.7805           0.6057              0.7744
+      2 nivel_valor_negocio     0.8362           0.8384              0.8362
+      3 rango_precio_compra     0.6704           0.6682              0.6699
+      4            rotacion     0.5374           0.5154              0.5431
+      5          nivel_meta     0.8722           0.8832              0.8724
