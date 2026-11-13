@@ -1,0 +1,6 @@
+modelo,variable_objetivo,descripcion,exactitud,precision_macro,sensibilidad_macro,precision_ponderada,sensibilidad_ponderada
+1,resultado_negocio,Resultado del negocio CRM,0.7805,0.6057,0.7744,0.8261,0.7805
+2,nivel_valor_negocio,Nivel de valor del negocio CRM,0.8362,0.8384,0.8362,0.8384,0.8362
+3,rango_precio_compra,Rango de precio unitario de compra,0.6704,0.6682,0.6699,0.6686,0.6704
+4,rotacion,Rotación de salidas de almacén,0.5374,0.5154,0.5431,0.5563,0.5374
+5,nivel_meta,Nivel de meta mensual por estado,0.8722,0.8832,0.8724,0.8837,0.8722
